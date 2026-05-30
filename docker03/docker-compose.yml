@@ -1,0 +1,40 @@
+version: "3.8"
+services:
+  frontend:
+    build: ./frontend
+    ports:
+      - "3000:80"
+    depends_on:
+      - backend
+    networks:
+      - my-costom-network
+
+  backend:
+    build: ./backend
+    ports:
+      - "5001:5000"
+    environment:
+      DB_HOST: datadase
+      DB_USER: postgres
+      DB_PASS: password
+      DB_NAME: postgres
+    depends_on:
+      - datadase
+    networks:
+      - my-costom-network
+  datadase:
+    image: postgres:16-alpine
+    restart: always
+    environment:
+       postgres_user: postgres
+       postgres_password: password
+       postgres_db: postgres
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    networks:
+      - my-costom-network
+volumes:
+  pgdata:
+networks:
+  my-costom-network:
+    driver: bridge
