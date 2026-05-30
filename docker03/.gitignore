@@ -1,5 +1,7 @@
 *
+!backend/
 !backend/Dockerfile
+!frontend/
 !frontend/Dockerfile
 !docker-compose.yml
 !.gitignore
